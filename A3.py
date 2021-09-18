@@ -10,7 +10,7 @@ def hello_world():
   return "Hello from CS4800 Software Engineering"
 
 @app.route("/Flora")
-def hello_world():
+def hello_flora():
   return "Hello from Flora"
 
 app.run(host = "0.0.0.0")
