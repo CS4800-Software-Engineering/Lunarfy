@@ -17,4 +17,8 @@ def hello_flora():
 def hi_rachel():
   return "Hi! -Rachel"
 
+@app.route("/Emily")
+def this_is_em():
+  return "This is Emily wheeeee"
+
 app.run(host = "0.0.0.0")
