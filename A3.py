@@ -25,5 +25,4 @@ def this_is_em():
 def neha_j():
   return "Neha has entered the group chat"
 
-
 app.run(host = "0.0.0.0")
