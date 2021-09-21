@@ -21,4 +21,9 @@ def hello_rachel():
 def this_is_em():
   return "This is Emily wheeeee"
 
+@app.route("/Neha")
+def this_is_em():
+  return "Neha has entered the group chat"
+
+
 app.run(host = "0.0.0.0")
