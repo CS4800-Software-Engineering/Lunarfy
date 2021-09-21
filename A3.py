@@ -13,9 +13,9 @@ def hello_world():
 def hello_flora():
   return "Hello from Flora"
 
-@app.route('/', methods=['GET'])
+@app.route("/Rachel", methods=['GET'])
 def hello_rachel():
-  return "<h1>hello from Rachel</h1>"
+  return "<h1>hi hi hi from Rachel</h1>"
 
 @app.route("/Emily")
 def this_is_em():
