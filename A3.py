@@ -25,4 +25,8 @@ def this_is_em():
 def neha_j():
   return "Neha has entered the group chat"
 
+@app.route("/Nathan")
+def nate_dog():
+  return "Nathan from CS 4800 is here"
+
 app.run(host = "0.0.0.0")
