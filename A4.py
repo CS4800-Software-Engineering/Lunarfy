@@ -3,6 +3,9 @@ import pandas as pd
 import json
 from flask_cors import CORS
 
+import emojis
+import wikipedia
+
 app = Flask(__name__)
 CORS(app)
 
@@ -16,8 +19,11 @@ def hello_panda():
   df = pd.DataFrame(data)
   return df.to_string()
 
-@app.route("/hello")
-def hello_world():
-  return "Hello from CS4800 Software Engineering"
+#Emily Villalba: Using Emojis and Wikipedia libraries
+@app.route("/wiki/<searchTerm>")
+def wiki(searchTerm):
+  result = wikipedia.page(searchTerm)
+  emojified = emojis.encode("What is " + searchTerm + "? :mag_right: ")
+  return emojified + result.summary
 
 app.run(host = "0.0.0.0")
