@@ -6,6 +6,8 @@ from flask_cors import CORS
 import emojis
 import wikipedia
 
+from googletrans import Translator
+
 app = Flask(__name__)
 CORS(app)
 
@@ -25,5 +27,12 @@ def wiki(searchTerm):
   result = wikipedia.page(searchTerm)
   emojified = emojis.encode("What is " + searchTerm + "? :mag_right: ")
   return emojified + result.summary
+
+@app.route('/detectLanguage/<myText>')
+def detectLanguage(myText):
+  translator = Translator()
+  myText = str(myText)
+  aString = str(translator.detect(myText))
+  return aString
 
 app.run(host = "0.0.0.0")
