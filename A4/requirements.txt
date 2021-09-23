@@ -4,17 +4,20 @@ antlr4-python3-runtime==4.9.2
 astunparse==1.6.3
 async-timeout==3.0.1
 attrs==21.2.0
+Automat @ file:///home/runner/.cache/pypoetry/artifacts/65/cb/ea/e1afb9a9a6bdf585a1e95564d6fc5f443bdd27b58bfff8b08a365e47ef/Automat-20.2.0-py2.py3-none-any.whl
 backports.entry-points-selectable==1.1.0
+beautifulsoup4 @ file:///home/runner/.cache/pypoetry/artifacts/6b/d1/6b/d0b3c51ce4f18fb1bd802534ae47547c8cac66e8dd8e35ec5dfa25ec74/beautifulsoup4-4.10.0-py3-none-any.whl
 CacheControl==0.12.6
 cachetools==4.2.2
 cachy==0.3.0
 certifi==2021.5.30
 cffi==1.14.6
-chardet==4.0.0
-charset-normalizer==2.0.4
+chardet @ file:///home/runner/.cache/pypoetry/artifacts/c2/02/35/0d93b80c730b360c5e3d9bdc1b8d1929dbd784ffa8e3db025c14c045e4/chardet-3.0.4-py2.py3-none-any.whl
+charset-normalizer @ file:///home/runner/.cache/pypoetry/artifacts/6b/6e/c4/d494c705502438f6acfae2ce84393c2e82b09e9bf6a6bab1f31ae29fa4/charset_normalizer-2.0.6-py3-none-any.whl
 cleo==0.8.1
 click==8.0.1
 clikit==0.6.2
+constantly @ file:///home/runner/.cache/pypoetry/artifacts/81/d2/5a/1408f06ae332603a8d2815a0f088eca5acfffef97318a835607a867c0a/constantly-15.1.0-py2.py3-none-any.whl
 crashtest==0.3.1
 cryptography==3.4.8
 cs50==7.0.2
@@ -22,21 +25,35 @@ cycler==0.10.0
 debugpy==1.2.1
 distlib==0.3.2
 docopt==0.6.2
+emoji @ file:///home/runner/.cache/pypoetry/artifacts/16/4d/f1/7abca1a146df6797c5386f8887cb7e01ee299ae78ca86277e0f9fd08f4/emoji-1.5.0.tar.gz
+emojis @ file:///home/runner/.cache/pypoetry/artifacts/e4/4c/32/9c2ed8b694e582d783df0edc044182fb640bbe02dbda5bac9e503b162f/emojis-0.6.0-py3-none-any.whl
 filelock==3.0.12
 Flask==2.0.1
+Flask-Cors @ file:///home/runner/.cache/pypoetry/artifacts/68/bd/c6/9b05e193427a1d6199aa2c920a95d20bf522d7caefd203a78632036868/Flask_Cors-3.0.10-py2.py3-none-any.whl
 funcsigs==1.0.2
 future==0.18.2
 gast==0.3.3
 glfw==2.2.0
+google==3.0.0
 google-auth==1.35.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
+googletrans @ file:///home/runner/.cache/pypoetry/artifacts/30/f4/2b/5e77570e3d41b106e3544353266f27911115782e7edc9ec02552a729de/googletrans-3.0.0.tar.gz
 greenlet==1.1.1
 grpcio==1.40.0
+h11 @ file:///home/runner/.cache/pypoetry/artifacts/eb/ba/70/b75b679c2644bc2a0101325cd08621e2d3f99e82f3fd905ef1fe383907/h11-0.9.0-py2.py3-none-any.whl
+h2 @ file:///home/runner/.cache/pypoetry/artifacts/1b/c1/79/2b4c6762bf37191f06237ba81afc518f75938e044ddbf1ecc5236265b8/h2-3.2.0-py2.py3-none-any.whl
 h5py==2.10.0
+hpack @ file:///home/runner/.cache/pypoetry/artifacts/f1/63/d9/bae47627eb5af92ee32e89ac7f89a1f327d5d05337321a707a0bffab6f/hpack-3.0.0-py2.py3-none-any.whl
+hstspreload @ file:///home/runner/.cache/pypoetry/artifacts/7b/84/70/d4ec214aa87b183f0bfa58597fab60f6a469f54d6b9a0ef50e4e43d6ef/hstspreload-2021.9.1-py3-none-any.whl
 html5lib==1.1
-idna==3.2
+httpcore @ file:///home/runner/.cache/pypoetry/artifacts/01/ce/70/e0725244386fe115b213ff8fb48d7d4e14ecc873715af77c77cb7ee7af/httpcore-0.9.1-py3-none-any.whl
+httpx @ file:///home/runner/.cache/pypoetry/artifacts/d2/f7/76/03f6405366bf8dabf0638430a418bd28d697f6b0240a22b3502436d7d9/httpx-0.13.3-py3-none-any.whl
+hyperframe @ file:///home/runner/.cache/pypoetry/artifacts/d4/ed/6f/75093d07d3087cd9bb60063d500ffdf577ced54570a566605c68181158/hyperframe-5.2.0-py2.py3-none-any.whl
+hyperlink @ file:///home/runner/.cache/pypoetry/artifacts/a8/60/f4/6db88d8dc79ad4964509faadbb57056a543952612bcc36c732657d744f/hyperlink-21.0.0-py2.py3-none-any.whl
+idna @ file:///home/runner/.cache/pypoetry/artifacts/9e/f9/03/6066b92d35486e7f0d4f310126e3c60a6619726e43ef98e32e105b5c52/idna-2.10-py2.py3-none-any.whl
 importlib-metadata==3.10.1
+incremental @ file:///home/runner/.cache/pypoetry/artifacts/b3/4e/73/a9b57942d2bc87181356083a207128fffb3623a34b8933d09553109911/incremental-21.3.0-py2.py3-none-any.whl
 itsdangerous==2.0.1
 jedi==0.15.2
 jeepney==0.7.1
@@ -52,10 +69,11 @@ matplotlib==3.4.3
 msgpack==1.0.2
 multidict==5.1.0
 nltk==3.6.2
-numpy==1.21.2
+numpy @ file:///home/runner/.cache/pypoetry/artifacts/85/83/49/a1815a60257e3b8e2934c737e542f3b531690042828aa93ee8e986d5e3/numpy-1.21.1-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl
 oauthlib==3.1.1
 opt-einsum==3.3.0
 packaging==20.9
+pandas @ file:///home/runner/.cache/pypoetry/artifacts/0a/14/3b/432d428bcc8a629eda75c43ec7098c0267a304e0c30d96838e29a9fc32/pandas-1.3.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 parso==0.5.2
 pastel==0.2.1
 pexpect==4.8.0
@@ -76,10 +94,12 @@ pygame==2.0.1
 pylev==1.4.0
 PyOpenGL==3.1.5
 pyparsing==2.4.7
+pyperclip @ file:///home/runner/.cache/pypoetry/artifacts/ba/70/15/a6c2e1644f5f3334626bf61adf3ae4ed9d78baf52c50cce5cfb5be3d9a/pyperclip-1.8.2.tar.gz
 pyquil==1.9.0
 python-dateutil==2.8.2
 python-jsonrpc-server==0.3.2
 python-language-server==0.31.10
+pytz @ file:///home/runner/.cache/pypoetry/artifacts/19/50/c9/f8bffb0360052b3c85b912bc4172f824bc2571e24002806fb3a428302e/pytz-2021.1-py2.py3-none-any.whl
 pyxel @ git+https://github.com/amasad/pyxel@8bcc2266b2fbb65f72ad686952de3838971c136e
 referenceqvm==0.3
 regex==2021.8.28
@@ -87,13 +107,16 @@ replit==3.2.4
 requests==2.26.0
 requests-oauthlib==1.3.0
 requests-toolbelt==0.9.1
+rfc3986 @ file:///home/runner/.cache/pypoetry/artifacts/a3/2b/89/b4304fda3d39161ecd93678451b59ed9fb972fec554956b6ba29441782/rfc3986-1.5.0-py2.py3-none-any.whl
 rope==0.18.0
 rsa==4.7.2
 scipy==1.4.1
 SecretStorage==3.3.1
 shellingham==1.4.0
 six==1.16.0
+sniffio @ file:///home/runner/.cache/pypoetry/artifacts/d0/91/b7/e6203dd46faa656f9ddf9a16cfbc3e51a56fa709d69642affedb2e0eff/sniffio-1.2.0-py3-none-any.whl
 sounddevice==0.4.2
+soupsieve @ file:///home/runner/.cache/pypoetry/artifacts/b8/a8/7f/9e40f555a1f9d45c0bee1c0968b363dd999d2beb5b111eec78c11e9203/soupsieve-2.2.1-py3-none-any.whl
 SQLAlchemy==1.4.23
 sqlparse==0.4.2
 tensorboard==2.2.2
@@ -104,14 +127,17 @@ termcolor==1.1.0
 toml==0.10.2
 tomlkit==0.7.2
 tqdm==4.62.2
-typing-extensions==3.7.4.3
+Twisted @ file:///home/runner/.cache/pypoetry/artifacts/74/19/ab/4cb7c3681af3d2d2af8091d90c6cea16aac1f81f812fd3cada504e006b/Twisted-21.7.0-py3-none-any.whl
+typing-extensions @ file:///home/runner/.cache/pypoetry/artifacts/63/00/66/294e7d75d34398c27c7ed9b154822f99422b0f11548b11c569c188eb2b/typing_extensions-3.10.0.2-py3-none-any.whl
 ujson==1.35
-urllib3==1.26.6
+urllib3 @ file:///home/runner/.cache/pypoetry/artifacts/d8/12/e2/1b499db5e41e88fd0f31d0e056a4dc7b53824f63f027fffc1702969c57/urllib3-1.26.7-py2.py3-none-any.whl
 virtualenv==20.7.2
 webencodings==0.5.1
 Werkzeug==2.0.1
+wikipedia @ file:///home/runner/.cache/pypoetry/artifacts/ad/c5/3c/8823cf6fc236beada58688639f909c908928f1b1cd1b16fb91274c5d2e/wikipedia-1.4.0.tar.gz
 wrapt==1.12.1
 yapf==0.31.0
 yarg==0.1.9
 yarl==1.6.3
 zipp==3.4.1
+zope.interface @ file:///home/runner/.cache/pypoetry/artifacts/bb/02/c9/1eb7f1a1ec4497a7b303ad85f1734630f53eb9ecfef3faaddb9c32fc01/zope.interface-5.4.0-cp38-cp38-manylinux2010_x86_64.whl
