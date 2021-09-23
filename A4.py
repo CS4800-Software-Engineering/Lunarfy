@@ -8,6 +8,8 @@ import wikipedia
 
 from googletrans import Translator
 
+import numpy as np
+
 app = Flask(__name__)
 CORS(app)
 
@@ -34,5 +36,11 @@ def detectLanguage(myText):
   myText = str(myText)
   aString = str(translator.detect(myText))
   return aString
+
+@app.route("/array2str")
+def array2string() :
+  arr = np.array([4, -8, 7 ])
+  out_arr = np.array_str(arr)
+  return(out_arr)
 
 app.run(host = "0.0.0.0")
