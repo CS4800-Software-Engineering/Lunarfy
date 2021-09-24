@@ -27,11 +27,6 @@ def search_term(term):
 
   return json_data
 
-@app.route("/google/<topic>")
-def google(topic):
-  user = str(topic)
-  result = str(search(user, num_results=1, lang="en", proxy=None))
-  return result
 
 @app.route("/array2str")
 def array2string() :
@@ -53,12 +48,6 @@ def array2string() :
 #   myText = str(myText)
 #   aString = str(translator.detect(myText))
 #   return aString
-
-# @app.route('/baseball_playoff_app/<teamName>')
-# def playoffApp(teamName):
-#   team = str(teamName)
-#   result = sports.get_team_info(sports.BASEBALL, team)
-#   return result
 
 
 app.run(host = "0.0.0.0")
