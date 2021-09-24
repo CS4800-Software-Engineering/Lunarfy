@@ -27,6 +27,11 @@ def search_term(term):
 
   return json_data
 
+@app.route("/google/<topic>")
+def google(topic):
+  user = str(topic)
+  result = str(search(user, num_results=1, lang="en", proxy=None))
+  return result
 
 @app.route("/array2str")
 def array2string() :
