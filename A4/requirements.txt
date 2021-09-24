@@ -39,6 +39,7 @@ google-auth==1.35.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
 googletrans @ file:///home/runner/.cache/pypoetry/artifacts/30/f4/2b/5e77570e3d41b106e3544353266f27911115782e7edc9ec02552a729de/googletrans-3.0.0.tar.gz
+googlesearch-python==1.0.1
 greenlet==1.1.1
 grpcio==1.40.0
 h11 @ file:///home/runner/.cache/pypoetry/artifacts/eb/ba/70/b75b679c2644bc2a0101325cd08621e2d3f99e82f3fd905ef1fe383907/h11-0.9.0-py2.py3-none-any.whl
