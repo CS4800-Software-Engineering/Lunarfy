@@ -1,11 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect
-# import json
 import time
-import os
-# import pandas as pd
-# from .downloadvideos import DownloadVideosFromTitles
 
 # App config
 app = Flask(__name__)
@@ -16,16 +12,12 @@ TOKEN_INFO = "token_info"
 # if os.path.exists("/Lunarfy/.cache"): 
 #     os.remove("/Lunarfy/.cache")
 
-
-
 @app.route('/')
 def login():
     spotify_oauth = create_spotify_oauth()
     auth_url = spotify_oauth.get_authorize_url()
     print(auth_url)
     return redirect(auth_url)
-
-
 
 
 @app.route('/redirect')
@@ -55,8 +47,8 @@ def getTracks():
         all_songs += songs
         if (len(songs) < 50):
             break
-    # return str(len(all_songs))
-    return str(all_songs)
+    return str(len(all_songs))
+    # return str(all_songs)
 
 def get_token():
     token_info = session.get(TOKEN_INFO, None)
@@ -77,6 +69,7 @@ def create_spotify_oauth():
             redirect_uri=url_for('redirectPage', _external=True),
             scope="user-library-read")
 
+app.run(host = "0.0.0.0")
 
 # @app.route('/')
 # def login():
