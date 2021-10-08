@@ -6,7 +6,7 @@ class TestStringMethods(unittest.TestCase):
     def test_check_username(self):
         self.assertEqual(main.check_username("12csaver4e3w  "), False)
 
-    def test_upper(self):
+    def test_check_username2(self):
         self.assertEqual(main.check_username("^*!(&#%($"), False)    
 
 #if name == '__main__':
