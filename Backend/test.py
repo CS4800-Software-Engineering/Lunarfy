@@ -30,7 +30,16 @@ class TestStringMethods(unittest.TestCase):
     self.assertEqual(password, False)
 
     
+  # Nathan
+  def test_check_wordbank(self):
+      word = main.check_wordbank("moon")
+      self.assertEqual(word, True)
 
+  def test_check_wordbank2(self):
+      word = main.check_wordbank("sun")
+      self.assertEqual(word, False)
+     
+    
   # After
   def tearDown(self):
     print("Finishing test...")
