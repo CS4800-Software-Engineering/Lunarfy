@@ -50,6 +50,13 @@ def check_login(username, password):
     return True
   else:
     return False
+  
+def check_wordbank(word):
+  copy:bool = False
+  curWord = db.collection(u'sampleData').document(word).get()
+  if curWord == word:
+    copy = True
+  return copy
 
 #testing
 #create_account("Lunarbit","123")
