@@ -11,7 +11,7 @@ class TestStringMethods(unittest.TestCase):
     
     
   #Flora
-  def test_check_username(self)
+  def test_check_username(self):
     self.assertEqual(main.check_username("12csaver4e3w  "), False)
 
   def test_check_username2(self):
@@ -50,6 +50,12 @@ class TestStringMethods(unittest.TestCase):
       username = main.check_username("JohnnyJune123")
       self.assertFalse(username)
 
+  #Rachel
+  # ensures that test_search returns something
+  def test_search(self):
+    jsonData = search_term("awesome")
+    self.assertTrue(jsonData)
+    
   # After
   def tearDown(self):
     print("Finishing test...")
