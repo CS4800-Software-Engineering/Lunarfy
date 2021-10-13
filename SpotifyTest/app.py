@@ -39,6 +39,7 @@ def getTracks():
         return redirect("/")
         # redirect(url_for("login", _external = True))
     sp = spotipy.Spotify(auth=token_info['access_token'])
+
     all_songs = []
     i = 0
     while True:
