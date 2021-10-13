@@ -40,6 +40,16 @@ class TestStringMethods(unittest.TestCase):
       self.assertEqual(word, False)
      
     
+  #Neha
+  #ensures that this username is not taken
+  def test_check_username_bool(self):
+      username = main.check_username("JohnnyJune")
+      self.assertFalse(username)
+
+  def test_check_username_bool2(self):
+      username = main.check_username("JohnnyJune123")
+      self.assertFalse(username)
+
   # After
   def tearDown(self):
     print("Finishing test...")
