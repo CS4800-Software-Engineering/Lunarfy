@@ -15,6 +15,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 application = Flask(__name__)
+app = application
 CORS(application)
 
 #database
