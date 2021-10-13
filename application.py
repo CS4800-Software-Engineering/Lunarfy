@@ -14,8 +14,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-app = Flask(__name__)
-CORS(app)
+application = Flask(__name__)
+CORS(application)
 
 #database
 # Use a service account
@@ -78,14 +78,14 @@ def check_login(username, password):
 #create_account("Lunarbit","123")
 #print(check_login("Lunarbit","123#"))
 
-@app.route('/', methods=['GET'])
+@application.route('/', methods=['GET'])
 def hello():
   return "This is working!"
 
 
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
-@app.route("/search/<term>")
+@application.route("/search/<term>")
 def search_term(term):
   genius_search_url = f"http://api.genius.com/search?q={term}&access_token={client_access_token}"
 
@@ -104,6 +104,6 @@ def search_term(term):
   return image_html'''
 
 '''if __name__ == "__main__":
-  app.run()'''
+  application.run()'''
 
-app.run(host = "0.0.0.0")
+application.run(host = "0.0.0.0")
