@@ -79,10 +79,10 @@ def check_login(username, password):
 #create_account("Lunarbit","123")
 #print(check_login("Lunarbit","123#"))
 
-@application.route('/', methods=['GET'])
+"""@application.route('/', methods=['GET'])
 def hello():
   return "This is working!"
-
+"""
 
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
@@ -107,4 +107,29 @@ def search_term(term):
 '''if __name__ == "__main__":
   application.run()'''
 
-application.run(host = "0.0.0.0")
+def say_hello(username = "World"):
+  return '<p>Hello %s!</p>\n' % username
+
+#TEST
+header_text = '''
+  <html>\n<head> <title>EB Flask Test</title> </head>\n<body>'''
+instructions = '''
+  <p><em>Hint</em>: This is a RESTful web service! Append a username
+  to the URL (for example: <code>/Thelonious</code>) to say hello to
+  someone specific.</p>\n'''
+home_link = '<p><a href="/">Back</a></p>\n'
+footer_text = '</body>\n</html>'
+
+application.add_url_rule('/', 'index', (lambda: header_text +
+  say_hello() + instructions + footer_text))
+
+application.add_url_rule('/<username>', 'hello', (lambda username:
+  header_text + say_hello(username) + home_link + footer_text))
+
+if __name__ == "__main__":
+  # Setting debug to True enables debug output. This line should be
+  # removed before deploying a production app.
+  application.debug = True
+  application.run()
+
+#application.run(host = "0.0.0.0")
