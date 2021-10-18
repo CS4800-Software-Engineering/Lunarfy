@@ -1,0 +1,149 @@
+@font-face { 
+  font-family: Poppins; src: url('Poppins.ttf'); 
+} 
+
+@font-face { 
+  font-family: PoppinsLight; src: url('PoppinsLight.ttf'); 
+} 
+
+a:link, a:visited {
+    text-align: center;
+    text-decoration: none;
+    font-size: 64px;
+    font-family: 'Poppins';
+    color: #FFFFFF;
+}
+a:hover, a:active {
+   background-color: none;
+}
+html {
+  height: 100%;
+}
+body {
+  font-family: Poppins;
+  background-color: #221c1c;
+  color: #FFFFFF;
+  background-image: url('https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  background-size: cover;
+}
+h1 {
+  font-size: 64px;
+  text-align:center;
+  font-family: 'Poppins';
+}
+            
+.container {  
+  text-align: center;   
+  padding-top: 10px; 
+  display: block;
+  margin-left: auto;
+  padding: 20px;
+}
+
+.button1 {background-color: #B19cd9;}
+
+.button {
+  font-family: Poppins;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 20px;
+  width: 450px;
+  height: 48;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+/* Add a background color on hover */
+.button:hover {
+  background-color: rgb(162, 143, 197);
+}
+
+
+input[type="text"]{
+  font-family: PoppinsLight;
+  font-size: 12px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 450px
+}
+
+input[type=submit] {
+  font-family: Poppins;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 100px;
+  padding: 20px;
+  width: 450px;
+  height: 48;
+  background-color: #B19cd9;
+}
+
+input[type=password] {
+  font-family: PoppinsLight;
+  font-size: 12px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 450px
+}
+
+input[type=submit]:hover {
+  background-color: rgb(162, 143, 197);
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* background-color: #333; */
+  font-family: 'Poppins';
+  color: #FFFFFF;
+}
+
+li {
+  /* display: inline; */
+  float: left;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size:14pt
+}
+li a:hover {
+  color: rgb(162, 143, 197);
+  /* opacity: 0.9; */
+  /* background-color: none; */
+}
+
+#hideform {display:block;}
