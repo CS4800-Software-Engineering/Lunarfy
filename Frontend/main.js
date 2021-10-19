@@ -1,4 +1,4 @@
-console.log("Hello from our JS")
+console.log("Welcome to LunarVerse")
 
 function createSongPage(songList){
     
