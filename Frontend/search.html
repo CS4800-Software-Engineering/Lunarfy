@@ -14,6 +14,11 @@
                 <label style="font-size:14pt;" for="guess"> Enter a lyric to search for:</label><br>
                 <input type="text" id="lyricID" name="lyric" placeholder="song name"><br>
             </form>
+        <!--
+        <button class="button button1" href={{ url_for('search_term', lyricID) }} onclick = "grabInput()">SUBMIT</button>
+
+        https://stackoverflow.com/questions/7478366/create-dynamic-urls-in-flask-with-url-for
+        -->
         <button class="button button1" onclick = "grabInput()">SUBMIT</button>
         <br><br>
         <div id="song">

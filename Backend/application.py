@@ -93,11 +93,27 @@ def search_term(term):
   response = requests.get(genius_search_url)
   json_data = response.json()
 
-#title, artist, img, in  dict **maybe lyric that contain the keyword (link to lyric)
-#title: [artist, img, link to lyric]
+  #pdf = pd.read_json(json_data)
+  pdf = pd.DataFrame.from_dict(json_data)
 
-#wordpress player -> lyric
-  return json_data #What data type to return ???
+  hit_list = pdf['response'][1]
+  ydf = pd.DataFrame(columns={'full_title'})
+
+#temp = 0
+  for hit in hit_list:
+    #temp += 1
+    #if temp > 10:
+        #break
+
+    song_title = hit['result']['full_title']
+
+    container = {'full_title': song_title}
+
+    ydf = ydf.append(container, ignore_index=True)
+
+  text= ydf.to_string(header=False, index=False)
+
+  return text
 
   
 '''def get_image_html(link):

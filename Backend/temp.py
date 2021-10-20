@@ -32,8 +32,6 @@ def search_term(term):
 
     text= ydf.to_string(header=False, index=False)
 
-    print(text)
-
     return text
 
 search_term('moon')
