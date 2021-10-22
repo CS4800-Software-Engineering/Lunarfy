@@ -19,6 +19,7 @@ def search_term(term):
     ydf = pd.DataFrame(columns={'full_title'})
 
 #temp = 0
+    text = ""
     for hit in hit_list:
         #temp += 1
         #if temp > 10:
@@ -26,12 +27,13 @@ def search_term(term):
 
         song_title = hit['result']['full_title']
 
-        container = {'full_title': song_title}
+        #container = {'full_title': song_title}
 
-        ydf = ydf.append(container, ignore_index=True)
+        #ydf = ydf.append(container, ignore_index=True)
+        text += song_title + "<br>" + "<br>"
 
-    text= ydf.to_string(header=False, index=False)
-
+    #text= ydf.to_string(header=False, index=False)
+    print(text)
     return text
 
 search_term('moon')
