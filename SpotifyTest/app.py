@@ -2,16 +2,24 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect
 import time
+<<<<<<< Updated upstream:SpotifyTest/app.py
+=======
+import os
+>>>>>>> Stashed changes:Spotify Login/app.py
 
 # App config
 app = Flask(__name__)
 
-app.secret_key = 'SOMETHING-RANDOM'
-app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
-TOKEN_INFO = "token_info"
-# if os.path.exists("/Lunarfy/.cache"): 
-#     os.remove("/Lunarfy/.cache")
 
+<<<<<<< Updated upstream:SpotifyTest/app.py
+=======
+app.secret_key = 'LunarBits'
+# app.config['SESSION_LunarBits'] = 'spotify-login-session'
+app.config['SESSION_LunarBits13132'] = 'spotify-login-session'
+TOKEN_INFO = "token_info"
+
+
+>>>>>>> Stashed changes:Spotify Login/app.py
 @app.route('/')
 def login():
     spotify_oauth = create_spotify_oauth()
@@ -42,19 +50,31 @@ def getTracks():
 
     all_songs = []
     i = 0
+    song_artist_list = []
+    # song_list = []
     while True:
         songs = sp.current_user_saved_tracks(limit=50, offset = i*50)['items']
+        for item in songs:
+            track = item['track']
+            song_artist_list.append(track['name'] + ' - ' + track['artists'][0]['name'])
         i += 1
         all_songs += songs
         if (len(songs) < 50):
             break
+<<<<<<< Updated upstream:SpotifyTest/app.py
     return str(len(all_songs))
     # return str(all_songs)
+=======
+
+    # return str(all_songs)
+    return str(song_artist_list)
+
+>>>>>>> Stashed changes:Spotify Login/app.py
 
 def get_token():
     token_info = session.get(TOKEN_INFO, None)
     if not token_info:
-        raise "exception"
+        raise Exception("exception")
     current_time = int(time.time())
     is_expired = token_info['expires_at'] - current_time < 60
     if (is_expired):
@@ -65,9 +85,10 @@ def get_token():
 
 def create_spotify_oauth():
     return SpotifyOAuth(
-            client_id = "3d0599807db743cda057327098315c0d",
-            client_secret = "1054bd165fb54ff8b6263c8641b0decc",
+            client_id = "fe1c7e16a583463eb0ae80eeea7970ea",
+            client_secret = "87df5a64860a4c98b0be4659751fa4fa",
             redirect_uri=url_for('redirectPage', _external=True),
+<<<<<<< Updated upstream:SpotifyTest/app.py
             scope="user-library-read")
 
 app.run(host = "0.0.0.0")
@@ -148,3 +169,6 @@ app.run(host = "0.0.0.0")
 #             client_secret="secret",
 #             redirect_uri=url_for('authorize', _external=True),
 #             scope="user-library-read")
+=======
+            scope="user-library-read")
+>>>>>>> Stashed changes:Spotify Login/app.py
