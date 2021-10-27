@@ -98,7 +98,6 @@ def search_term(term):
 
     response = requests.get(genius_search_url)
     json_data = response.json()
-<<<<<<< HEAD
 
     #pdf = pd.read_json(json_data)
     pdf = pd.DataFrame.from_dict(json_data)
