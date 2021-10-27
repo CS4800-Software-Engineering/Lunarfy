@@ -1,5 +1,5 @@
 #import test
-from flask import Flask, url_for, session, request, redirect
+from flask import Flask, url_for, session, request, redirect, render_template
 import json
 #import lyricsgenius
 import pandas as pd
@@ -23,6 +23,8 @@ app = application
 # Use a service account
 cred = credentials.Certificate(
     '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
+'''cred = credentials.Certificate(
+    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')'''
 default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -84,13 +86,18 @@ def check_login(username, password):
 # print(check_login("Lunarbit","123#"))
 
 
-"""@application.route('/', methods=['GET'])
-def hello():
-  return "This is working!"
-"""
 
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
+
+@application.route("/search", methods=["POST","GET"])
+def search():
+  if request.method == "POST":
+    lyric = request.form["lyric"]
+    redirect(url_for(search_term, term=lyric))
+  else:
+    return render_template("search.html")
+    #return render_template("Lunarfy\Frontend\search.html")
 
 @application.route("/search/<term>")
 def search_term(term):
@@ -144,35 +151,6 @@ def search_term(term):
     #text= ydf.to_string(header=False, index=False)
 
     return text
-
-
-'''def get_image_html(link):
-  image_html = f"<img src='{link}' width='500px'>"
-  return image_html'''
-
-'''if __name__ == "__main__":
-  application.run()'''
-
-
-def say_hello(username="World"):
-    return '<p>Hello %s!</p>\n' % username
-
-
-# TEST
-header_text = '''
-  <html>\n<head> <title>EB Flask Test</title> </head>\n<body>'''
-instructions = '''
-  <p><em>Hint</em>: This is a RESTful web service! Append a username
-  to the URL (for example: <code>/Thelonious</code>) to say hello to
-  someone specific.</p>\n'''
-home_link = '<p><a href="/">Back</a></p>\n'
-footer_text = '</body>\n</html>'
-
-application.add_url_rule('/', 'index', (lambda: header_text +
-                                        say_hello() + instructions + footer_text))
-
-application.add_url_rule('/<username>', 'hello', (lambda username:
-                                                  header_text + say_hello(username) + home_link + footer_text))
 
 
 # SPOTIFY
