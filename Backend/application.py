@@ -98,6 +98,7 @@ def search_term(term):
 
     response = requests.get(genius_search_url)
     json_data = response.json()
+<<<<<<< HEAD
 
     #pdf = pd.read_json(json_data)
     pdf = pd.DataFrame.from_dict(json_data)
@@ -118,6 +119,30 @@ def search_term(term):
         ydf = ydf.append(container, ignore_index=True)
 
     text = ydf.to_string(header=False, index=False)
+
+
+
+    #pdf = pd.read_json(json_data)
+    pdf = pd.DataFrame.from_dict(json_data)
+
+    hit_list = pdf['response'][1]
+    ydf = pd.DataFrame(columns={'full_title'})
+
+#temp = 0
+    text = ""
+    for hit in hit_list:
+        #temp += 1
+        #if temp > 10:
+            #break
+
+        song_title = hit['result']['full_title']
+
+        #container = {'full_title': song_title}
+
+        #ydf = ydf.append(container, ignore_index=True)
+        text += song_title + "<br>" + "<br>"
+
+    #text= ydf.to_string(header=False, index=False)
 
     return text
 
