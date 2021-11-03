@@ -90,17 +90,21 @@ def check_login(username, password):
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
 
-@application.route("/search", methods=["POST","GET"])
+@application.route("/search", methods=["POST", "GET"])
 def search():
-  if request.method == "POST":
-    lyric = request.form["lyric"]
-    redirect(url_for(search_term, term=lyric))
-  else:
-    return render_template("search.html")
-    #return render_template("Lunarfy\Frontend\search.html")
+    if request.method == "POST":
+	    lyric = request.form["lyric"]
+	    return redirect(url_for("search_term", term=lyric))
+    else:
+        return render_template("search.html")
 
-@application.route("/search/<term>")
+
+##helper method
+#https://www.youtube.com/watch?v=uqr-e-dkkNI
+#https://www.youtube.com/watch?v=9MHYHgh4jYc
+@app.route("/<term>")
 def search_term(term):
+
     genius_search_url = f"http://api.genius.com/search?q={term}&access_token={client_access_token}"
 
     response = requests.get(genius_search_url)
@@ -110,32 +114,10 @@ def search_term(term):
     pdf = pd.DataFrame.from_dict(json_data)
 
     hit_list = pdf['response'][1]
-    ydf = pd.DataFrame(columns={'full_title'})
+    #ydf = pd.DataFrame(columns={'full_title'})
 
 #temp = 0
-    for hit in hit_list:
-        #temp += 1
-        # if temp > 10:
-        # break
-
-        song_title = hit['result']['full_title']
-
-        container = {'full_title': song_title}
-
-        ydf = ydf.append(container, ignore_index=True)
-
-    text = ydf.to_string(header=False, index=False)
-
-
-
-    #pdf = pd.read_json(json_data)
-    pdf = pd.DataFrame.from_dict(json_data)
-
-    hit_list = pdf['response'][1]
-    ydf = pd.DataFrame(columns={'full_title'})
-
-#temp = 0
-    text = ""
+    text = []
     for hit in hit_list:
         #temp += 1
         #if temp > 10:
@@ -146,11 +128,11 @@ def search_term(term):
         #container = {'full_title': song_title}
 
         #ydf = ydf.append(container, ignore_index=True)
-        text += song_title + "<br>" + "<br>"
+        text.append(song_title)
 
     #text= ydf.to_string(header=False, index=False)
-
-    return text
+    return render_template("search.html", data=text)
+    #return text
 
 
 # SPOTIFY
