@@ -85,63 +85,33 @@ def check_login(username, password):
 # create_account("Lunarbit","123")
 # print(check_login("Lunarbit","123#"))
 
-
-
-client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
-
-
-@application.route("/search", methods=["POST", "GET"])
-def search():
-    if request.method == "POST":
-	    lyric = request.form["lyric"]
-	    return redirect(url_for("search_term", term=lyric))
-    else:
-        return render_template("search.html")
-
-
-##helper method
-#https://www.youtube.com/watch?v=uqr-e-dkkNI
-#https://www.youtube.com/watch?v=9MHYHgh4jYc
-@app.route("/<term>")
-def search_term(term):
-
-    genius_search_url = f"http://api.genius.com/search?q={term}&access_token={client_access_token}"
-
-    response = requests.get(genius_search_url)
-    json_data = response.json()
-
-    #pdf = pd.read_json(json_data)
-    pdf = pd.DataFrame.from_dict(json_data)
-
-    hit_list = pdf['response'][1]
-    #ydf = pd.DataFrame(columns={'full_title'})
-
-#temp = 0
-    text = []
-    for hit in hit_list:
-        #temp += 1
-        #if temp > 10:
-            #break
-
-        song_title = hit['result']['full_title']
-
-        #container = {'full_title': song_title}
-
-        #ydf = ydf.append(container, ignore_index=True)
-        text.append(song_title)
-
-    #text= ydf.to_string(header=False, index=False)
-    return render_template("search.html", data=text)
-    #return text
-
-
 # SPOTIFY
-
-
 application.secret_key = 'LunarBits'
 # app.config['SESSION_LunarBits'] = 'spotify-login-session'
 application.config['SESSION_LunarBits13132'] = 'spotify-login-session'
 TOKEN_INFO = "token_info"
+
+@application.route('/test/<track>')
+def search_sp_id(track):
+    try:
+        token_info = get_token()
+    except:
+        print("not logged in")
+        return redirect("/")
+        # redirect(url_for("login", _external = True))
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+
+    json_data = sp.search(q='track:' + track, type='track')
+
+    track_id = json_data['tracks']['items'][0]['id']
+    embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>'
+    temp = []
+    temp.append(embed_song)
+    embed_song2 = f'<iframe src="https://open.spotify.com/embed/playlist/4pU0EfbTZhIO8NcdcubEUw?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>'
+    temp.append(embed_song2)
+    #return track_id
+    return render_template("search.html", data=temp)
+    #return embed_song
 
 
 @application.route('/login_spotify')
@@ -209,6 +179,78 @@ def create_spotify_oauth():
         client_secret="87df5a64860a4c98b0be4659751fa4fa",
         redirect_uri=url_for('redirectPage', _external=True),
         scope="user-library-read")
+
+
+#Genius API
+client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
+
+
+@application.route("/search", methods=["POST", "GET"])
+def search():
+    if request.method == "POST":
+	    lyric = request.form["lyric"]
+	    return redirect(url_for("search_term", term=lyric))
+    else:
+        return render_template("search.html")
+
+
+##helper method
+#https://www.youtube.com/watch?v=uqr-e-dkkNI
+#https://www.youtube.com/watch?v=9MHYHgh4jYc
+@app.route("/searchfor<term>")
+def search_term(term):
+    try:
+        token_info = get_token()
+    except:
+        print("not logged in")
+        return redirect("/")
+        # redirect(url_for("login", _external = True))
+
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+
+    genius_search_url = f"http://api.genius.com/search?q={term}&access_token={client_access_token}"
+
+    response = requests.get(genius_search_url)
+    json_data = response.json()
+
+    #pdf = pd.read_json(json_data)
+    pdf = pd.DataFrame.from_dict(json_data)
+
+    hit_list = pdf['response'][1]
+    #ydf = pd.DataFrame(columns={'full_title'})
+
+#temp = 0
+    text = []
+    for hit in hit_list:
+        #temp += 1
+        #if temp > 10:
+            #break
+
+        song_title = hit['result']['title']
+
+#song title contain () might cause error
+#https://stackoverflow.com/questions/3774015/how-do-i-get-all-iframe-elements
+#google list of iframes
+
+
+
+        #container = {'full_title': song_title}
+        #track_player = search_sp_id(song_title)
+        json_data = sp.search(q='track:' + song_title, type='track')
+
+        track_id = json_data['tracks']['items'][0]['id']
+        embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>'
+
+        #items = song_id['artists']['items']
+        #ydf = ydf.append(container, ignore_index=True)
+
+        #text.append(song_title)
+        text.append(embed_song)
+
+    #text= ydf.to_string(header=False, index=False)
+    return render_template("search.html", data=text)
+    #return text
+
 
 
 if __name__ == "__main__":
