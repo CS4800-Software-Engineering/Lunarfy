@@ -29,15 +29,60 @@ default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+@app.route("/result",methods = ["POST", "GET"])
+def create_account():
 
-def create_account(username, password):
-    doc_ref = db.collection(u'sampleData').document(username)
+
     # check_valid_password()
-    doc_ref.set({
-        u'username': username,
-        u'password': password
-    })
-    print(username + " successful")
+
+
+    if request.method == "POST":        #Only listen to POST
+        result = request.form           #Get the data submitted
+        email = result["email"]
+        password = result["password"]
+        try:
+
+            if check_username(email):
+                text = "Account already exist"
+
+            else:
+                text = "Congrats"
+
+            doc_ref = db.collection(u'sampleData').document(email)
+            doc_ref.set({
+            u'username': email,
+            u'password': password
+            })
+
+
+            text = "!!!Congrats"
+            return render_template("confirm.html", data=text)
+            #Go to welcome page
+            #return redirect(url_for('confirm'), text)
+
+        except:
+            #If there is any error, redirect to register
+            return redirect(url_for('weblogin'))
+
+    else:
+       return redirect(url_for('signup'))
+
+
+
+
+
+@app.route("/confirm")
+def confirm(text):
+    return render_template("confirm.html", data=text)
+
+
+@app.route("/login")
+def weblogin():
+    return render_template("login.html")
+
+
+
+
 
 
 def check_valid_password(password):
@@ -67,19 +112,52 @@ def check_wordbank(word):
     return copy
 
 
-def check_login(username, password):
-    if not check_username(username):
-        return
+@app.route("/checklogin",methods = ["POST", "GET"])
+def check_login():
 
-    # use check_username and check_password method
+    if request.method == "POST":        #Only listen to POST
+        result = request.form           #Get the data submitted
+        email = result["abc"]
+        password = result["haha"]
+        try:
 
-    users_ref = db.collection(u'sampleData').document(username)
-    db_password = users_ref.get(
-        field_paths={'password'}).to_dict().get('password')
-    if(db_password == password):
-        return True
+            if check_username(email):
+                text = "Account already exist"
+
+            else:
+                text = "Congrats"
+
+            users_ref = db.collection(u'sampleData').document(email)
+            db_password = users_ref.get(
+            field_paths={'password'}).to_dict().get('password')
+
+            if(db_password == password):
+                return render_template("confirm.html", data="same password")
+            else:
+                return render_template("confirm.html", data="different password")
+
+
+            #Go to welcome page
+            #return redirect(url_for('confirm'), text)
+
+        except:
+            #If there is any error, redirect to register
+            return render_template("confirm.html", data="error")
+
     else:
-        return False
+       return render_template("confirm.html", data="error2")
+
+
+
+
+
+@application.route("/about.html")
+def about():
+    return render_template("about.html")
+
+@application.route("/signup")
+def signup():
+    return render_template("signup.html", data="test")
 
 # testing
 # create_account("Lunarbit","123")
@@ -188,7 +266,7 @@ client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_l
 @application.route("/search", methods=["POST", "GET"])
 def search():
     if request.method == "POST":
-	    lyric = request.form["lyric"]
+	    lyric = request.form["lyric"] #clear previous data
 	    return redirect(url_for("search_term", term=lyric))
     else:
         return render_template("search.html")
@@ -203,7 +281,7 @@ def search_term(term):
         token_info = get_token()
     except:
         print("not logged in")
-        return redirect("/")
+        return redirect("/") #if not login in return title
         # redirect(url_for("login", _external = True))
 
     sp = spotipy.Spotify(auth=token_info['access_token'])
@@ -239,13 +317,16 @@ def search_term(term):
         json_data = sp.search(q='track:' + song_title, type='track')
 
         track_id = json_data['tracks']['items'][0]['id']
-        embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>'
+        embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
 
         #items = song_id['artists']['items']
         #ydf = ydf.append(container, ignore_index=True)
 
         #text.append(song_title)
         text.append(embed_song)
+
+    #get rid of repeat
+    #"Spring" not working
 
     #text= ydf.to_string(header=False, index=False)
     return render_template("search.html", data=text)
