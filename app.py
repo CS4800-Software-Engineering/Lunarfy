@@ -4,7 +4,7 @@ import json
 #import lyricsgenius
 import pandas as pd
 import requests
-from IPython.core.display import HTML
+#from IPython.core.display import HTML
 import google
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -21,10 +21,10 @@ app = application
 
 # database
 # Use a service account
+#cred = credentials.Certificate(
+    #'/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
 cred = credentials.Certificate(
-    '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
-'''cred = credentials.Certificate(
-    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')'''
+    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
 default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -148,7 +148,9 @@ def check_login():
        return render_template("confirm.html", data="error2")
 
 
-
+@application.route("/")
+def homepage():
+    return render_template("index.html")
 
 
 @application.route("/about.html")
@@ -166,7 +168,7 @@ def signup():
 # SPOTIFY
 application.secret_key = 'LunarBits'
 # app.config['SESSION_LunarBits'] = 'spotify-login-session'
-application.config['SESSION_LunarBits13132'] = 'spotify-login-session'
+application.config['SESSION_LunarBits'] = 'spotify-login-session'
 TOKEN_INFO = "token_info"
 
 @application.route('/test/<track>')
@@ -277,11 +279,12 @@ def search():
 #https://www.youtube.com/watch?v=9MHYHgh4jYc
 @app.route("/searchfor<term>")
 def search_term(term):
+    login = True
     try:
         token_info = get_token()
     except:
         print("not logged in")
-        return redirect("/") #if not login in return title
+        login = False
         # redirect(url_for("login", _external = True))
 
     sp = spotipy.Spotify(auth=token_info['access_token'])
@@ -298,13 +301,15 @@ def search_term(term):
     #ydf = pd.DataFrame(columns={'full_title'})
 
 #temp = 0
-    text = []
+    text_iframe = []
+    text_title = []
     for hit in hit_list:
         #temp += 1
         #if temp > 10:
             #break
 
         song_title = hit['result']['title']
+        text_title.append(song_title)
 
 #song title contain () might cause error
 #https://stackoverflow.com/questions/3774015/how-do-i-get-all-iframe-elements
@@ -323,13 +328,16 @@ def search_term(term):
         #ydf = ydf.append(container, ignore_index=True)
 
         #text.append(song_title)
-        text.append(embed_song)
+        text_iframe.append(embed_song)
 
     #get rid of repeat
     #"Spring" not working
 
     #text= ydf.to_string(header=False, index=False)
-    return render_template("search.html", data=text)
+    if login:
+        return render_template("search.html", data=text_iframe)
+    else:
+        return render_template("search.html", data=text_title)
     #return text
 
 
