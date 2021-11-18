@@ -6,13 +6,25 @@
     <title>Search</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <ul>
-        <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/">Home</a></li>
-        <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/search.html">Search</a></li>
-        <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/game.html">Game</a></li>
-        <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/about.html">About</a></li>
-    </ul>
+    </html>
+    <header>
+    <div class="container" style="list-style: none;">
+      <li><a class = "logo" style="font-size:25pt" href="http://lunarverse.pythonanywhere.com/">LunarVerse</a></li>
+      <nav>
+      <ul>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/search">Search</a></li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/game.html">Game</a></li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/about.html">About</a></li>
+          <li class = "separator" style="font-size:14pt">|</li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/signup.html">Sign up</a></li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/login.html">Log in</a></li>
+
+      </ul>
+      </nav>
+    </div>
+  </header>
     <script src="main.js"></script>
     <div allign="center">
         <div class="container">
@@ -29,16 +41,14 @@
         -->
         <br>
         <div id="song">
-            <iframe src="https://open.spotify.com/embed/track/2x90QLkIofZxBusyh4umob?utm_source=generator" width="30%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-            <br>
-            <br>
-            <iframe src="https://open.spotify.com/embed/track/60CueJX9vAclyPm2229I2d?utm_source=generator" width="30%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-            <br>
-            <br>
+
             {% for data in data %}
-            <p>{{ data }}</p>
+
+            {{ data | safe }}
             <br>
+
             {% endfor %}
+
         </div>
     </div>
     </div>
