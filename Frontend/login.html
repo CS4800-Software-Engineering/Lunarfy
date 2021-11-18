@@ -10,21 +10,22 @@
     <a href="http://lunarverse.pythonanywhere.com/"><h1>LunarVerse</h1></a>
     <script src="script.js"></script>
     <div allign="center">
-        <div class="container">  
-          <form>
+        <div class="container">
+          <form action="http://lunarverse.pythonanywhere.com/checklogin" method = "POST">
             <label for="email">Email address</label><br>
-            <input type="text" id="email" size="40" placeholder="Enter your email."><br>
-            
+            <input type="text" id="email" size="40" placeholder="Enter your email." name="abc"><br>
+
             <label for="pass"> Password</label><br>
             <input type="password" id="pass"
-            minlength="8" required placeholder="Enter password."><br><br><br>
+            minlength="8" required placeholder="Enter password." password="haha"><br><br><br>
 
+            <input class="button button1" type="submit" value="LOGIN"/>
             <div allign="center">
-              <div class="container">  
-                <button class="button button1">NEXT</button>
+              <div class="container">
+
               </div>
-              <div class="container">  
-                <<button class="button button1" onclick="location.href='http://lunarverse.pythonanywhere.com/'">GO BACK</button>
+              <div class="container">
+                <button class="button button1" onclick="location.href='http://lunarverse.pythonanywhere.com/'">GO BACK</button>
               </div>
             </div>
           </form>
