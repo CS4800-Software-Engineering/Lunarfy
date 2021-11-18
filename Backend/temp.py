@@ -14,27 +14,26 @@ def search_term(term):
 
     #pdf = pd.read_json(json_data)
     pdf = pd.DataFrame.from_dict(json_data)
-    print(pdf['response'])
 
-    xdf = pdf['response'].to_dict()
-    ydf = pd.DataFrame(columns={'song_title'})
+    hit_list = pdf['response'][1]
+    ydf = pd.DataFrame(columns={'full_title'})
 
 #temp = 0
-    for i in xdf.keys():
+    text = ""
+    for hit in hit_list:
         #temp += 1
         #if temp > 10:
             #break
 
-        print(xdf[i])
-        song_title = xdf[i]['result']['full_title']
-        container = {'full_title': song_title}
+        song_title = hit['result']['full_title']
 
-        ydf = ydf.append(container, ignore_index=True)
+        #container = {'full_title': song_title}
 
-    text= ydf.to_string(header=False)
+        #ydf = ydf.append(container, ignore_index=True)
+        text += song_title + "<br>" + "<br>"
 
+    #text= ydf.to_string(header=False, index=False)
     print(text)
-
     return text
 
 search_term('moon')
