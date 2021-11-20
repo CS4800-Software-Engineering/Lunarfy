@@ -282,12 +282,12 @@ def search_term(term):
     login = True
     try:
         token_info = get_token()
+        sp = spotipy.Spotify(auth=token_info['access_token'])
     except:
         print("not logged in")
         login = False
         # redirect(url_for("login", _external = True))
 
-    sp = spotipy.Spotify(auth=token_info['access_token'])
 
     genius_search_url = f"http://api.genius.com/search?q={term}&access_token={client_access_token}"
 
@@ -316,19 +316,19 @@ def search_term(term):
 #google list of iframes
 
 
+        if login:
+            #container = {'full_title': song_title}
+            #track_player = search_sp_id(song_title)
+            json_data = sp.search(q='track:' + song_title, type='track')
 
-        #container = {'full_title': song_title}
-        #track_player = search_sp_id(song_title)
-        json_data = sp.search(q='track:' + song_title, type='track')
+            track_id = json_data['tracks']['items'][0]['id']
+            embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
 
-        track_id = json_data['tracks']['items'][0]['id']
-        embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
+            #items = song_id['artists']['items']
+            #ydf = ydf.append(container, ignore_index=True)
 
-        #items = song_id['artists']['items']
-        #ydf = ydf.append(container, ignore_index=True)
-
-        #text.append(song_title)
-        text_iframe.append(embed_song)
+            #text.append(song_title)
+            text_iframe.append(embed_song)
 
     #get rid of repeat
     #"Spring" not working
