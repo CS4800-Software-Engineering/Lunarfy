@@ -10,6 +10,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import time
 #import unittest
+from bs4 import BeautifulSoup
 
 # database
 import firebase_admin
@@ -171,6 +172,8 @@ application.secret_key = 'LunarBits'
 application.config['SESSION_LunarBits'] = 'spotify-login-session'
 TOKEN_INFO = "token_info"
 
+
+
 @application.route('/test/<track>')
 def search_sp_id(track):
     try:
@@ -264,6 +267,60 @@ def create_spotify_oauth():
 #Genius API
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
+def lyrics_from_song_api_path(song_api_path):
+    base_url = "http://api.genius.com"
+    headers = {'Authorization': f'Bearer {client_access_token}'}
+    song_url = base_url + song_api_path
+    response = requests.get(song_url, headers=headers)
+    
+    json = response.json()
+
+    
+    path = json["response"]["song"]["path"]
+    page_url = "http://genius.com" + path
+    page = requests.get(page_url)
+
+    html = BeautifulSoup(page.text, "html.parser")
+    [h.extract() for h in html('script')]
+    lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text() 
+    return lyrics
+
+@application.route('/test')
+#def check_song_lyric(song_title, term, artist_name):
+def check_song_lyric():
+    song_title = "moon"
+    artist_name = "Kanye west"
+    term = "Lonely"
+
+    genius_search_url = f"http://api.genius.com/search?q={song_title}&access_token={client_access_token}"
+
+    response = requests.get(genius_search_url)
+    json = response.json()
+    
+    #return json
+
+    song_info = None
+
+    for hit in json["response"]["hits"]:
+        if hit["result"]["primary_artist"]["name"].casefold() == artist_name.casefold():
+            song_info = hit
+            break
+
+    if song_info:
+        song_api_path = song_info["result"]["api_path"]
+        
+        lyric = lyrics_from_song_api_path(song_api_path)
+
+        
+        if term.casefold() in lyric.casefold():
+            return f"{song_title} Found {term}"
+        else:
+            return f"{song_title} Not Found {term}"
+    else:
+        return "NULL"
+
+
+    
 
 @application.route("/search", methods=["POST", "GET"])
 def search():
