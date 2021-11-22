@@ -221,7 +221,7 @@ def getTracks():
         token_info = get_token()
     except:
         print("not logged in")
-        return redirect("/")
+        return redirect("/login_spotify")
         # redirect(url_for("login", _external = True))
     sp = spotipy.Spotify(auth=token_info['access_token'])
     all_songs = []
