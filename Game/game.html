@@ -13,7 +13,7 @@
       <nav>
       <ul>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/search">Search</a></li>
-          <li><a style="font-size:14pt" href="https://pages.emilyrvillalba.repl.co/game.html">Game</a></li>
+          <li><a style="font-size:14pt" href="file:///C:/Users/Emily%20Villalba/Documents/GitHub/Lunarfy/Game/game.html">Game</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/about.html">About</a></li>
           <li class = "separator" style="font-size:14pt">|</li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/signup.html">Sign up</a></li>
@@ -35,9 +35,9 @@
           <br><br>
           <button class="button button1" id = "generate" onclick = "generateWord()">GENERATE WORD</button><br><br>
 
-          <div style="display:none" id = "points" >Points: 0
+          <div id = "points" >Points: 0</div>
 
-          <form>    
+          <!-- <form>     -->
             <br>
             <label style="display:none" style="font-size:14pt;" id = "prompt" for="guess"> Enter a song that contains this word in the lyrics or title:</label>
 
@@ -48,19 +48,19 @@
             <!-- <labelfor="guess"> "keyword"</label><br><br><br> -->
             <div style="font-size:25pt;" style="display:none" id = "keyword">
             </div><br>
-            <div style="display:none" id = "timer">1:00</div><br><br>
+            <div style="display:none" id = "timer">0:30</div><br><br>
                     
             <div allign="center">
               <input style="display:none"  style="height:80px;font-size:30pt;" type="text" id="field" name="field" placeholder="song name"><br style="display:none" id = "bf1"><br style="display:none" id = "bf2"><br style="display:none" id = "bf3">
 
-              <button class="button button1" onclick = "game()" style="display:none" id = "check"> SUBMIT</button> 
+              <button class="button button1" onclick = "game3()" style="display:none" id = "check"> SUBMIT</button> 
             </div>
 
               <div style="display:none" style="font-size:25pt;" id = "correctOrNot" > Result </div><br style="display:none" id = "b1">
               <button style="display:none" class="button button1" onclick = "generateWord()" id = "continue">NEXT WORD</button><br style="display:none" id = "b1"><br style="display:none" id = "b1">
               <button style="display:none" class="button button1" onclick = "final()" id = "end">END GAME</button><br style="display:none" id = "b1"><br style="display:none" id = "b1">
 
-          </form>
+          <!-- </form> -->
   
          
         </div>
