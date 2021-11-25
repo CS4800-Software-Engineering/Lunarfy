@@ -1,0 +1,271 @@
+@font-face {
+  font-family: Poppins; src: url('Poppins.ttf');
+}
+
+@font-face {
+  font-family: PoppinsLight; src: url('PoppinsLight.ttf');
+}
+
+a:link, a:visited {
+    text-align: center;
+    text-decoration: none;
+    font-size: 64px;
+    font-family: 'Poppins';
+    color: #FFFFFF;
+}
+a:hover, a:active {
+   background-color: none;
+}
+html {
+  height: 100%;
+}
+body {
+  font-family: Poppins;
+  background-color: #221c1c;
+  color: #FFFFFF;
+  background-image: url('https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+	font-weight: 800;
+}
+h1 {
+  font-size: 64px;
+  text-align:left;
+  font-family: 'Poppins';
+  margin: 5;
+  padding-top:0; 
+}  
+p{
+  font-size: 12px;
+  margin: 8;
+  padding-top:0; 
+}
+.container {
+  text-align: center;
+  padding-top: 10px;
+  display: block;
+  margin-left: auto;
+  padding: 20px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+header {
+  background: #B19cd9;
+}
+
+header::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  list-style-type: none;
+  display: inline-block;
+  margin-left: 20px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+
+
+.logo:hover {
+  color: #000;
+}
+
+nav {
+  float: right;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  list-style-type: none;
+  overflow: hidden;
+  /* background-color: #333; */
+  font-family: 'Poppins';
+  color: #FFFFFF;
+  text-align:center;  
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 70px;
+  padding-top: 10px;
+  list-style-type: none;
+  position: relative;
+}
+
+nav a {
+  list-style-type: none;
+  color: #444;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: #000;
+}
+
+nav a::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background-color: #444;
+  list-style-type: none;
+  position: absolute;
+  top: 0;
+  width: 0%;
+
+  transition: all ease-in-out 250ms;
+}
+
+nav a:hover::before {
+  width: 100%;
+}
+
+.separator {
+  color: #FFFFFF;
+  font-family: 'PoppinsLight';
+  padding: 0px
+}
+
+.button1 {background-color: #B19cd9;}
+
+.button {
+  font-family: Poppins;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 100px;
+  /*padding: 20px;*/
+  width: 450px;
+  height: 48px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+/* Add a background color on hover */
+.button:hover {
+  background-color: rgb(143, 122, 182);
+}
+
+
+input[type="text"]{
+  font-family: PoppinsLight;
+  font-size: 12px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 450px
+}
+
+input[type=submit] {
+  font-family: Poppins;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 100px;
+  /*padding: 20px;*/
+  width: 450px;
+  height: 48;
+  background-color: #B19cd9;
+}
+
+input[type=password] {
+  font-family: PoppinsLight;
+  font-size: 12px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 450px
+}
+
+input[type=submit]:hover {
+  background-color: rgb(144, 121, 187);
+  display: none;
+}
+
+
+#hideform {display:block;}
+
+.footer {
+  font-family: PoppinsLight;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+}
+
+
+/* Container needed to position the button. Adjust the width as needed */
+.containerB {
+  position: relative;
+  padding-bottom: 20px;
+  width: 50%;
+  align-items: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+  
+
+}
+
+/* Make the image responsive */
+.containerB img {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  align-items: center;
+
+
+}
+
+/* Style the button and place it in the middle of the container/image */
+.containerB .btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  left: 50%;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+
+
+}
