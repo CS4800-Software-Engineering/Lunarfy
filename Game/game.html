@@ -33,7 +33,8 @@
 
 
           <br><br>
-          <button class="button button1" id = "generate" onclick = "generateWord()">GENERATE WORD</button><br><br>
+          <button class="button button1" id = "begin" onclick = "startTime()">GENERATE WORD</button>
+          <button style = "display:none" class = "button button1" id = "generate" onclick = "generateWord()">GENERATE WORD</button><br><br>
 
           <div id = "points" >Points: 0</div>
 
@@ -41,12 +42,12 @@
             <br>
             <label style="display:none" style="font-size:14pt;" id = "prompt" for="guess"> Enter a song that contains this word in the lyrics or title:</label>
 
-            <label style="display:none" id = "timeup"> Time is up! </label><br>
-            <label style="display:none" id = "songs"> Here are some songs you could have guessed for the word: </label>  
-            <br style="display:none" id = "space">
+            <!-- <label style="display:none" id = "timeup"> Time is up! </label><br>
+            <label style="display:none" id = "songs"> Here are some songs you could have guessed for the word: </label>   -->
+            <!-- <br style="display:none" id = "space"> -->
 
             <!-- <labelfor="guess"> "keyword"</label><br><br><br> -->
-            <div style="font-size:25pt;" style="display:none" id = "keyword">
+            <br><div style="font-size:25pt;" style="display:none" id = "keyword">
             </div><br>
             <div style="display:none" id = "timer">0:30</div><br><br>
                     

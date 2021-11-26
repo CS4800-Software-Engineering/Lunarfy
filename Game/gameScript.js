@@ -7,7 +7,6 @@ const wordbank = ["take", "life", "back", "never","die", "away", "give", "time",
 var word = ''
 let time = 0.5 * 60;
 
-
 function updateTimer() {
     const minutes = Math.floor(time / 60); // rounds a number DOWN to the nearest integer
     let seconds = time % 60;
@@ -27,11 +26,11 @@ function updateTimer() {
         document.getElementById("bf2").style.display = "none";
         document.getElementById("bf3").style.display = "none";
 
-        document.getElementById("timeup").style.display = "inline-block";
-        document.getElementById("songs").style.display = "inline-block";
+        // document.getElementById("timeup").style.display = "inline-block";
+        // document.getElementById("songs").style.display = "inline-block";
         document.getElementById("space").style.display = "inline-block";
 
-        document.getElementById("keyword").style.display = "inline-block";   
+        document.getElementById("keyword").style.display = "none";   
         document.getElementById("continue").style.display = "inline-block";
         document.getElementById("generate").style.display = "none";
         document.getElementById("end").style.display = "inline-block";
@@ -45,10 +44,18 @@ function updateTimer() {
 }
 
 
+
+function startTime(){
+  refreshIntervalId = setInterval(updateTimer, 1000);
+  document.getElementById("begin").style.display = "none"
+  alert("begin")
+  generateWord()
+}
+
 function generateWord(points=0){
   // clearInterval(refreshIntervalId);
-  time = 0.5 * 60;
-  refreshIntervalId = setInterval(updateTimer, 1000);
+  // time = 0.5 * 60;
+  // refreshIntervalId = setInterval(updateTimer, 1000);
   var pointStr = "Points: "+ points
 
   document.getElementById("generate").style.display = "inline-block"
@@ -60,8 +67,8 @@ function generateWord(points=0){
   document.getElementById("bf2").style.display = "inline-block"
   document.getElementById("bf3").style.display = "inline-block"
   document.getElementById("keyword").style.display = "inline-block"
-  document.getElementById("timeup").style.display = "none"
-  document.getElementById("songs").style.display = "none"
+  // document.getElementById("timeup").style.display = "none"
+  // document.getElementById("songs").style.display = "none"
   document.getElementById("space").style.display = "none"
   document.getElementById("continue").style.display = "none"
   document.getElementById("end").style.display = "inline-block"
@@ -100,34 +107,34 @@ function game3(){
 
 
 
-function game2(){
-  clearInterval(refreshIntervalId);
-  // document.getElementById("continue").style.display = "inline-block";
-  // document.getElementById("check").style.display = "none";
-  // document.getElementById("field").style.display = "none";
-  // document.getElementById("prompt").style.display = "none"
+// function game2(){
+//   clearInterval(refreshIntervalId);
+//   // document.getElementById("continue").style.display = "inline-block";
+//   // document.getElementById("check").style.display = "none";
+//   // document.getElementById("field").style.display = "none";
+//   // document.getElementById("prompt").style.display = "none"
 
 
-  // alert("Correct");
-  var correct = "True";
+//   // alert("Correct");
+//   var correct = "True";
 
-  if (correct == "True"){
-    points = points + 1;
+//   if (correct == "True"){
+//     points = points + 1;
 
-    var pointStr = "Points: " + points;
-    var resultStr = "Correct";
-    document.getElementById("points").innerHTML = pointStr;
-    alert("result");
-    generateWord();
+//     var pointStr = "Points: " + points;
+//     var resultStr = "Correct";
+//     document.getElementById("points").innerHTML = pointStr;
+//     alert("result");
+//     generateWord();
 
-  }else{
-    alert("Incorrect");
-    generateWord();
-  }
-  generateWord();
-  alert("generate");
+//   }else{
+//     alert("Incorrect");
+//     generateWord();
+//   }
+//   generateWord();
+//   alert("generate");
 
-}
+// }
 
 
 
