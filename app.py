@@ -212,7 +212,7 @@ def redirectPage():
     code = request.args.get("code")
     token_info = spotify_oauth.get_access_token(code)
     session[TOKEN_INFO] = token_info
-    return redirect(url_for('getTracks', _external=True))
+    return redirect(url_for('login_spotify', _external=True))
 
 
 @application.route('/getTracks')
@@ -288,6 +288,9 @@ def lyrics_from_song_api_path(song_api_path):
 @application.route('/test')
 #def check_song_lyric(song_title, term, artist_name):
 def check_song_lyric():
+    
+    # TODO make artisst name null for defalut
+
     song_title = "moon"
     artist_name = "Kanye west"
     term = "Lonely"
@@ -313,20 +316,24 @@ def check_song_lyric():
 
         
         if term.casefold() in lyric.casefold():
-            return f"{song_title} Found {term}"
+            #return f"{song_title} Found {term}"
+            return True
         else:
-            return f"{song_title} Not Found {term}"
+            #return f"{song_title} Not Found {term}"
+            return False
     else:
         return "NULL"
 
 
-    
+
 
 @application.route("/search", methods=["POST", "GET"])
 def search():
     if request.method == "POST":
-	    lyric = request.form["lyric"] #clear previous data
-	    return redirect(url_for("search_term", term=lyric))
+        lyric = request.form["lyric"] 
+        #return redirect(url_for("search_term", term=lyric))
+        return search_term(lyric)
+
     else:
         return render_template("search.html")
 
@@ -334,7 +341,7 @@ def search():
 ##helper method
 #https://www.youtube.com/watch?v=uqr-e-dkkNI
 #https://www.youtube.com/watch?v=9MHYHgh4jYc
-@app.route("/searchfor<term>")
+#@app.route("/searchfor<term>")
 def search_term(term):
     login = True
     try:
