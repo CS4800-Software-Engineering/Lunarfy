@@ -1,5 +1,6 @@
 #import test
-from flask import Flask, url_for, session, request, redirect, render_template
+import re
+from flask import Flask, url_for, session, request, redirect, render_template,jsonify
 import json
 #import lyricsgenius
 import pandas as pd
@@ -227,13 +228,14 @@ def getTracks():
     all_songs = []
     i = 0
     song_artist_list = []
-    # song_list = []
+    song_list = []
     while True:
         songs = sp.current_user_saved_tracks(limit=50, offset=i*50)['items']
         for item in songs:
             track = item['track']
             song_artist_list.append(
                 track['name'] + ' - ' + track['artists'][0]['name'])
+            song_list.append(track['name'])
         i += 1
         all_songs += songs
         if (len(songs) < 50):
@@ -241,6 +243,7 @@ def getTracks():
 
     # return str(all_songs)
     return str(song_artist_list)
+    #return song_list
 
 
 def get_token():
@@ -278,6 +281,7 @@ def lyrics_from_song_api_path(song_api_path):
     
     path = json["response"]["song"]["path"]
     page_url = "http://genius.com" + path
+    print(page_url)
     page = requests.get(page_url)
 
     html = BeautifulSoup(page.text, "html.parser")
@@ -285,57 +289,122 @@ def lyrics_from_song_api_path(song_api_path):
     lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text() 
     return lyrics
 
-@application.route('/test')
-#def check_song_lyric(song_title, term, artist_name):
-def check_song_lyric():
-    
-    # TODO make artisst name null for defalut
+#@application.route('/test')
+def check_song_lyric(song_title, term, artist_name=""):
+#def check_song_lyric():
 
-    song_title = "moon"
-    artist_name = "Kanye west"
-    term = "Lonely"
+    '''song_title = "moon"  
+    artist_name = ""
+    term = "Lonely"'''
 
     genius_search_url = f"http://api.genius.com/search?q={song_title}&access_token={client_access_token}"
 
     response = requests.get(genius_search_url)
     json = response.json()
+
+    check_artist = False
+    result_found = False
+    if(artist_name != ""):
+        for hit in json["response"]["hits"]:
+            if hit["result"]["primary_artist"]["name"].casefold() == artist_name.casefold():
+                check_artist = True
+                song_info = hit
+                break
     
-    #return json
-
-    song_info = None
-
-    for hit in json["response"]["hits"]:
-        if hit["result"]["primary_artist"]["name"].casefold() == artist_name.casefold():
+    if not check_artist:
+        for hit in json["response"]["hits"]:
             song_info = hit
-            break
 
-    if song_info:
+            song_api_path = song_info["result"]["api_path"]
+            
+            lyric = lyrics_from_song_api_path(song_api_path)
+
+            if term.casefold() in lyric.casefold():
+                #return f"{song_title} Found {term}"
+                result_found = True
+                break
+    else:
         song_api_path = song_info["result"]["api_path"]
-        
+            
         lyric = lyrics_from_song_api_path(song_api_path)
 
-        
         if term.casefold() in lyric.casefold():
             #return f"{song_title} Found {term}"
-            return True
-        else:
-            #return f"{song_title} Not Found {term}"
-            return False
-    else:
-        return "NULL"
-
-
+            result_found = True
+        
+    #return str(result_found)
+    return result_found, check_artist
 
 
 @application.route("/search", methods=["POST", "GET"])
 def search():
+    #TODO need drop down to select what to search
+
     if request.method == "POST":
         lyric = request.form["lyric"] 
         #return redirect(url_for("search_term", term=lyric))
         return search_term(lyric)
-
     else:
         return render_template("search.html")
+
+
+@app.errorhandler(404)
+def not_found(error):
+    resp = jsonify({'error':'not found'})
+    resp.status_code = 404
+    return resp
+
+@application.route("/searchliked")
+#def search_liked(term):
+def search_liked():
+    term = "golden"
+    try:
+        token_info = get_token()
+    except:
+        print("not logged in")
+        return redirect("/login_spotify")
+        
+    sp = spotipy.Spotify(auth=token_info['access_token'])
+    song_artist_list = []
+    i=0
+    song_list = []
+    while True:
+        songs = sp.current_user_saved_tracks(limit=50, offset=i*50)['items']
+        for item in songs:
+            track = item['track']
+            song_artist_list.append(track['artists'][0]['name'])
+            song_list.append(track['name'])
+        i += 1
+        if (len(songs) < 50):
+            break
+
+    text_iframe = []
+    
+    for i in range(len(song_list)):
+        song = song_list[i]
+        artist = song_artist_list[i]
+        result_found, check_artist = check_song_lyric(song, term, artist)
+        if result_found:
+            #container = {'full_title': song_title}
+            #track_player = search_sp_id(song_title)
+            json_data = sp.search(q='track:' + song, type='track')
+
+            track_id = json_data['tracks']['items'][0]['id']
+            embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
+
+            #items = song_id['artists']['items']
+            #ydf = ydf.append(container, ignore_index=True)
+
+            #text.append(song_title)
+            text_iframe.append(embed_song)
+
+    #get rid of repeat
+    #"Spring" not working
+
+    #text= ydf.to_string(header=False, index=False)
+    return render_template("search.html", data=text_iframe)
+
+    #return text
 
 
 ##helper method
