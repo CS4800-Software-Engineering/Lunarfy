@@ -1,18 +1,16 @@
 #import test
-import re
-from flask import Flask, url_for, session, request, redirect, render_template,jsonify
+from flask import Flask, url_for, session, request, redirect, render_template, jsonify
 import json
 #import lyricsgenius
 import pandas as pd
 import requests
-#from IPython.core.display import HTML
+from IPython.core.display import HTML
 import google
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import time
 #import unittest
 from bs4 import BeautifulSoup
-
 # database
 import firebase_admin
 from firebase_admin import credentials
@@ -23,8 +21,10 @@ app = application
 
 # database
 # Use a service account
-#cred = credentials.Certificate(
-    #'/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
+'''
+cred = credentials.Certificate(
+    '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
+'''
 cred = credentials.Certificate(
     'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
 default_app = firebase_admin.initialize_app(cred)
@@ -119,8 +119,8 @@ def check_login():
 
     if request.method == "POST":        #Only listen to POST
         result = request.form           #Get the data submitted
-        email = result["abc"]
-        password = result["haha"]
+        email = result["username"]
+        password = result["password"]
         try:
 
             if check_username(email):
@@ -170,10 +170,8 @@ def signup():
 # SPOTIFY
 application.secret_key = 'LunarBits'
 # app.config['SESSION_LunarBits'] = 'spotify-login-session'
-application.config['SESSION_LunarBits'] = 'spotify-login-session'
+application.config['SESSION_LunarBits13132'] = 'spotify-login-session'
 TOKEN_INFO = "token_info"
-
-
 
 @application.route('/test/<track>')
 def search_sp_id(track):
@@ -181,7 +179,7 @@ def search_sp_id(track):
         token_info = get_token()
     except:
         print("not logged in")
-        return redirect("/")
+        return redirect("/login_spotify")
         # redirect(url_for("login", _external = True))
     sp = spotipy.Spotify(auth=token_info['access_token'])
 
@@ -200,6 +198,7 @@ def search_sp_id(track):
 
 @application.route('/login_spotify')
 def login_spotify():
+    #error if already login
     spotify_oauth = create_spotify_oauth()
     auth_url = spotify_oauth.get_authorize_url()
     print(auth_url)
@@ -213,7 +212,7 @@ def redirectPage():
     code = request.args.get("code")
     token_info = spotify_oauth.get_access_token(code)
     session[TOKEN_INFO] = token_info
-    return redirect(url_for('login_spotify', _external=True))
+    return redirect("/")
 
 
 @application.route('/getTracks')
@@ -222,20 +221,19 @@ def getTracks():
         token_info = get_token()
     except:
         print("not logged in")
-        return redirect("/login_spotify")
+        redirect("/login_spotify")
         # redirect(url_for("login", _external = True))
     sp = spotipy.Spotify(auth=token_info['access_token'])
     all_songs = []
     i = 0
     song_artist_list = []
-    song_list = []
+    # song_list = []
     while True:
         songs = sp.current_user_saved_tracks(limit=50, offset=i*50)['items']
         for item in songs:
             track = item['track']
             song_artist_list.append(
                 track['name'] + ' - ' + track['artists'][0]['name'])
-            song_list.append(track['name'])
         i += 1
         all_songs += songs
         if (len(songs) < 50):
@@ -243,7 +241,6 @@ def getTracks():
 
     # return str(all_songs)
     return str(song_artist_list)
-    #return song_list
 
 
 def get_token():
@@ -270,30 +267,33 @@ def create_spotify_oauth():
 #Genius API
 client_access_token = "XeImR34nFU5IF4bocaMMdB9WST0JPDN3wXMsIla34bZzY8uOyzMmON2_lvBLNR5J"
 
+
+#!!!!!!!!!!!!!!!!!!!!!!!!
+#NEW
 def lyrics_from_song_api_path(song_api_path):
     base_url = "http://api.genius.com"
     headers = {'Authorization': f'Bearer {client_access_token}'}
     song_url = base_url + song_api_path
     response = requests.get(song_url, headers=headers)
-    
+
     json = response.json()
 
-    
+
     path = json["response"]["song"]["path"]
     page_url = "http://genius.com" + path
-    print(page_url)
     page = requests.get(page_url)
 
     html = BeautifulSoup(page.text, "html.parser")
     [h.extract() for h in html('script')]
-    lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text() 
+    lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text()
     return lyrics
+
 
 #@application.route('/test')
 def check_song_lyric(song_title, term, artist_name=""):
 #def check_song_lyric():
 
-    '''song_title = "moon"  
+    '''song_title = "moon"
     artist_name = ""
     term = "Lonely"'''
 
@@ -310,13 +310,13 @@ def check_song_lyric(song_title, term, artist_name=""):
                 check_artist = True
                 song_info = hit
                 break
-    
+
     if not check_artist:
         for hit in json["response"]["hits"]:
             song_info = hit
 
             song_api_path = song_info["result"]["api_path"]
-            
+
             lyric = lyrics_from_song_api_path(song_api_path)
 
             if term.casefold() in lyric.casefold():
@@ -325,28 +325,28 @@ def check_song_lyric(song_title, term, artist_name=""):
                 break
     else:
         song_api_path = song_info["result"]["api_path"]
-            
+
         lyric = lyrics_from_song_api_path(song_api_path)
 
         if term.casefold() in lyric.casefold():
             #return f"{song_title} Found {term}"
             result_found = True
-        
+
     #return str(result_found)
     return result_found, check_artist
 
 
+@application.route("/searchhome")
+def searchhome():
+    return render_template("libraryChoice.html")
+
 @application.route("/search", methods=["POST", "GET"])
 def search():
-    #TODO need drop down to select what to search
-
     if request.method == "POST":
-        lyric = request.form["lyric"] 
-        #return redirect(url_for("search_term", term=lyric))
-        return search_term(lyric)
+	    lyric = request.form["lyric"] #clear previous data
+	    return search_term(lyric)
     else:
         return render_template("search.html")
-
 
 @app.errorhandler(404)
 def not_found(error):
@@ -354,16 +354,21 @@ def not_found(error):
     resp.status_code = 404
     return resp
 
-@application.route("/searchliked")
-#def search_liked(term):
-def search_liked():
-    term = "golden"
+@application.route("/searchliked", methods=["POST", "GET"])
+def searchliked():
+    if request.method == "POST":
+	    lyric = request.form["lyric"] #clear previous data
+	    return search_liked(lyric)
+    else:
+        return render_template("searchliked.html")
+
+def search_liked(term):
     try:
         token_info = get_token()
     except:
         print("not logged in")
         return redirect("/login_spotify")
-        
+
     sp = spotipy.Spotify(auth=token_info['access_token'])
     song_artist_list = []
     i=0
@@ -379,7 +384,7 @@ def search_liked():
             break
 
     text_iframe = []
-    
+
     for i in range(len(song_list)):
         song = song_list[i]
         artist = song_artist_list[i]
@@ -402,7 +407,7 @@ def search_liked():
     #"Spring" not working
 
     #text= ydf.to_string(header=False, index=False)
-    return render_template("search.html", data=text_iframe)
+    return render_template("searchliked.html", data=text_iframe)
 
     #return text
 
@@ -410,7 +415,6 @@ def search_liked():
 ##helper method
 #https://www.youtube.com/watch?v=uqr-e-dkkNI
 #https://www.youtube.com/watch?v=9MHYHgh4jYc
-#@app.route("/searchfor<term>")
 def search_term(term):
     login = True
     try:
@@ -454,6 +458,9 @@ def search_term(term):
             #track_player = search_sp_id(song_title)
             json_data = sp.search(q='track:' + song_title, type='track')
 
+            if json_data['tracks']['total'] == 0:
+                break
+
             track_id = json_data['tracks']['items'][0]['id']
             embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
 
@@ -472,7 +479,6 @@ def search_term(term):
     else:
         return render_template("search.html", data=text_title)
     #return text
-
 
 
 if __name__ == "__main__":
