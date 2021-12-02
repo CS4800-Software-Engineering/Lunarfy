@@ -21,12 +21,10 @@ app = application
 
 # database
 # Use a service account
-'''
 cred = credentials.Certificate(
     '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
-'''
-cred = credentials.Certificate(
-    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
+'''cred = credentials.Certificate(
+    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')'''
 default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -43,12 +41,9 @@ def create_account():
         email = result["email"]
         password = result["password"]
         try:
-
             if check_username(email):
                 text = "Account already exist"
-
-            else:
-                text = "Congrats"
+                return render_template("confirm.html", data=text)
 
             doc_ref = db.collection(u'sampleData').document(email)
             doc_ref.set({
@@ -57,7 +52,7 @@ def create_account():
             })
 
 
-            text = "!!!Congrats"
+            text = "Registration Complete!"
             return render_template("confirm.html", data=text)
             #Go to welcome page
             #return redirect(url_for('confirm'), text)
@@ -68,8 +63,6 @@ def create_account():
 
     else:
        return redirect(url_for('signup'))
-
-
 
 
 
@@ -122,21 +115,21 @@ def check_login():
         email = result["username"]
         password = result["password"]
         try:
-
+            '''
             if check_username(email):
-                text = "Account already exist"
-
+                pass
             else:
-                text = "Congrats"
+                return render_template("correct.html", data="Incorrect Username or Password")
+                '''
 
             users_ref = db.collection(u'sampleData').document(email)
             db_password = users_ref.get(
             field_paths={'password'}).to_dict().get('password')
 
             if(db_password == password):
-                return render_template("confirm.html", data="same password")
+                return render_template("correct.html", data=f"Welcome, {email}")
             else:
-                return render_template("confirm.html", data="different password")
+                return render_template("correct.html", data="Incorrect Username or Password")
 
 
             #Go to welcome page
@@ -144,10 +137,10 @@ def check_login():
 
         except:
             #If there is any error, redirect to register
-            return render_template("confirm.html", data="error")
+            return render_template("correct.html", data="Unknow Error Occur!")
 
     else:
-       return render_template("confirm.html", data="error2")
+       return render_template("correct.html", data="Unknow Error Occur!")
 
 
 @application.route("/")
@@ -207,13 +200,12 @@ def login_spotify():
 
 @application.route('/redirect')
 def redirectPage():
-    
     spotify_oauth = create_spotify_oauth()
     session.clear()
     code = request.args.get("code")
     token_info = spotify_oauth.get_access_token(code)
     session[TOKEN_INFO] = token_info
-    return redirect("/")
+    return redirect("/getTracks")
 
 
 @application.route('/getTracks')
@@ -227,21 +219,21 @@ def getTracks():
     sp = spotipy.Spotify(auth=token_info['access_token'])
     all_songs = []
     i = 0
-    song_artist_list = []
+    song_artist_list = ""
     # song_list = []
     while True:
         songs = sp.current_user_saved_tracks(limit=50, offset=i*50)['items']
         for item in songs:
             track = item['track']
-            song_artist_list.append(
-                track['name'] + ' - ' + track['artists'][0]['name'])
+            song_artist_list += "<br> "+ track['name'] + " - " + track['artists'][0]['name']+"<br>"
         i += 1
         all_songs += songs
         if (len(songs) < 50):
             break
 
     # return str(all_songs)
-    return str(song_artist_list)
+    return render_template("mysong.html", data=song_artist_list)
+    #return song_artist_list
 
 
 def get_token():
@@ -279,26 +271,27 @@ def lyrics_from_song_api_path(song_api_path):
 
     json = response.json()
 
-
     path = json["response"]["song"]["path"]
     page_url = "http://genius.com" + path
     page = requests.get(page_url)
 
+    #https://www.reddit.com/r/learnpython/comments/qzbvs4/trying_to_scrape_song_lyrics_breaks_disappear_and/
+
     html = BeautifulSoup(page.text, "html.parser")
     [h.extract() for h in html('script')]
-    lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text()
+    try:
+        lyrics = html.find("div", class_="Lyrics__Container-sc-1ynbvzw-6 lgZgEN").get_text()
+    except:
+         return str(page_url)
     return lyrics
 
 
-#@application.route('/test')
-def check_song_lyric(song_title, term, artist_name=""):
-#def check_song_lyric():
 
-    '''song_title = "moon"
-    artist_name = ""
-    term = "Lonely"'''
 
-    genius_search_url = f"http://api.genius.com/search?q={song_title}&access_token={client_access_token}"
+@application.route('/checkanswer/<song_title>/<term>/<artist_name>')
+def check_answer(song_title, term, artist_name=""):
+
+    genius_search_url = f"http://api.genius.com/search?q={song_title + artist_name}&access_token={client_access_token}"
 
     response = requests.get(genius_search_url)
     json = response.json()
@@ -334,8 +327,44 @@ def check_song_lyric(song_title, term, artist_name=""):
             result_found = True
 
     #return str(result_found)
-    return result_found, check_artist
+    if result_found == True:
+        return "true"
+    else:
+        return "false"
+    #return str(result_found)
+    #return result_found, check_artist
 
+
+def check_song_lyric(song_list, song_title, term, artist_name):
+#def check_song_lyric():
+    if len(song_list) == 0:
+        return False
+
+    genius_search_url = f"http://api.genius.com/search?q={song_title + artist_name}&access_token={client_access_token}"
+
+    response = requests.get(genius_search_url)
+    json = response.json()
+
+    result_found = False
+    
+    for hit in json["response"]["hits"]:
+        if hit["result"]["primary_artist"]["name"].casefold() == artist_name.casefold():
+            song_info = hit
+            break
+
+    try:
+        song_api_path = song_info["result"]["api_path"]
+    except:
+        return False
+
+    lyric = lyrics_from_song_api_path(song_api_path)
+
+    if term.casefold() in lyric.casefold():
+        #return f"{song_title} Found {term}"
+        result_found = True
+
+    #return str(result_found)
+    return result_found
 
 @application.route("/searchhome")
 def searchhome():
@@ -389,20 +418,24 @@ def search_liked(term):
     for i in range(len(song_list)):
         song = song_list[i]
         artist = song_artist_list[i]
-        result_found, check_artist = check_song_lyric(song, term, artist)
+        result_found = check_song_lyric(song_list, song, term, artist)
+        print(song, artist, result_found)
         if result_found:
             #container = {'full_title': song_title}
             #track_player = search_sp_id(song_title)
             json_data = sp.search(q='track:' + song, type='track')
 
-            track_id = json_data['tracks']['items'][0]['id']
-            embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
+            try:
+                track_id = json_data['tracks']['items'][0]['id']
+                embed_song = f'<iframe src="https://open.spotify.com/embed/track/{track_id}?utm_source=generator" width="450" height="80" frameBorder="0" allowfullscreen="/" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe> <br>'
 
             #items = song_id['artists']['items']
             #ydf = ydf.append(container, ignore_index=True)
 
             #text.append(song_title)
-            text_iframe.append(embed_song)
+                text_iframe.append(embed_song)
+            except:
+                pass
 
     #get rid of repeat
     #"Spring" not working
