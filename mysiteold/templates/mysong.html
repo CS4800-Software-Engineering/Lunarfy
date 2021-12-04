@@ -3,37 +3,40 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Price</title>
+    <title>Game</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <header>
-        <img class="pic" src="luna.png" width="40px" height="40px" style="float:left;">
-
     <div class="container" style="list-style: none;">
       <li><a class = "logo" style="font-size:25pt" href="http://lunarverse.pythonanywhere.com/">LunarVerse</a></li>
       <nav>
       <ul>
-          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/">Home</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/searchhome">Search</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/game.html">Game</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/about.html">About</a></li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/price.html">Upgrade</a></li>
           <li class = "separator" style="font-size:14pt">|</li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/signup.html">Sign up</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/login.html">Log in</a></li>
+
       </ul>
       </nav>
     </div>
   </header>
-  <p style="text-align:center;"><img src="finalPrices2.png" width="1000px" height="500px"></p>
-  </body>
-  <div class="footer">
-    <br>
-    <p>Lunar Bits </p>
-    <p>CS 4800 Fall 2021</p>
-    <div class="containerB">
-      <img src="gh.png" width="40px" height="40px">
-      <button class="btn" onclick="location.href='https://github.com/CS4800-Software-Engineering'"></button>
+    <script src="script.js"></script>
+    <div allign="center">
+        <div class="container">
+          <br>
+          <br>
+            <div style="font-size:40px">Your Liked Songs</div>
+
+          <br>
+            {{ data | safe }}
+          <br>
+          <button class="button button1" onclick="window.location.href='https://lunarverse.pythonanywhere.com/';">RETURN HOME</button>
+        </div>
     </div>
-  </div>
+
+  </body>
 </html>

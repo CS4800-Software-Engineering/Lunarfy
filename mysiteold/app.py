@@ -4,7 +4,7 @@ import json
 #import lyricsgenius
 import pandas as pd
 import requests
-#from IPython.core.display import HTML
+from IPython.core.display import HTML
 import google
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
@@ -16,21 +16,15 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-from flask_cors import CORS # RACHEL ADDED
-
 application = Flask(__name__)
-
- #RACHEL ADDED
 app = application
-CORS(app)
-
 
 # database
 # Use a service account
+# cred = credentials.Certificate(
+#     '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
 cred = credentials.Certificate(
-    '/home/LunarVerse/mysite/lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
-'''cred = credentials.Certificate(
-    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')'''
+    'lunarfy-9c860-firebase-adminsdk-bwf4g-98b586e21d.json')
 default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -297,7 +291,7 @@ def lyrics_from_song_api_path(song_api_path):
 
 
 
-@application.route('/checkanswer/<song_title>/<term>/<artist_name>/', methods=['GET'])
+@application.route('/checkanswer/<song_title>/<term>/<artist_name>', methods=['GET'])
 def check_answer(song_title, term, artist_name=""):
 
     genius_search_url = f"http://api.genius.com/search?q={song_title + artist_name}&access_token={client_access_token}"
@@ -337,16 +331,18 @@ def check_answer(song_title, term, artist_name=""):
 
 
     #return str(result_found)
-    if result_found == True:
-        # response1 = flask.jsonify({'answer': 'true'})
-        # response1.headers.add('Access-Control-Allow-Origin', '*')
-        return "True"
-    else:
-        # response2 = "false"
-        # response2.headers.add('Access-Control-Allow-Origin', '*')
-        return "False"
-    #return str(result_found)
-    #return result_found, check_artist
+    # if result_found == True:
+    #     # response1 = "true"
+    #     # response1 = flask.jsonify({'answer': 'true'})
+    #     response1.headers.add('Access-Control-Allow-Origin', '*')
+    #     # return response1
+    # else:
+    #     # response2 = "false"
+    #     # response2 = flask.jsonify({'answer': 'false'})
+    #     response2.headers.add('Access-Control-Allow-Origin', '*')
+    #     # return response2
+    # #return str(result_found)
+    return result_found, check_artist
 
 
 def check_song_lyric(song_list, song_title, term, artist_name):

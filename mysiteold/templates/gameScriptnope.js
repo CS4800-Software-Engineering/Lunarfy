@@ -1,14 +1,14 @@
 // const countdown = 1
 // let time = countdown * 60
 // const countdown = document.getElementById("timer")
-let points = 0
+var points = 0
 // var correct = true
 const wordbank = ["take", "life", "back", "never","die", "away", "give", "time", "night", "day", "man", "woman", "dream", "world", "little","baby", "good", "again", "eyes", "mind", "heart", "world", "you", "breathe", "love", "fire", "dance", "moon", "sun", "star", "flower", "kiss", "lips", "sugar", "honey", "sweet", "girl", "boy", "everything", "lovely", "beautiful", "car", "music", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "december", "september", "august", "red", "blue", "yellow", "green", "orange", "purple", "black", "white", "sad", "happy", "mad", "slow", "fast", "talk", "call", "run", "sorry", "money", "myself", "young", "old", "school", "work"];
 var word = ''
-let time = 1 * 60;
+let time = 0.5 * 60;
 var attemptArtist = false;
 var songGuess = "song";
-var artistGuess = "%20";
+var artistGuess = "artist";
 
 function updateTimer() {
     const minutes = Math.floor(time / 60); // rounds a number DOWN to the nearest integer
@@ -22,10 +22,7 @@ function updateTimer() {
     if (time < 0) { //stop the setInterval whe time = 0 for avoid negative time
         clearInterval(refreshIntervalId);
         document.getElementById("finalLabel").style.display = "inline-block"
-        document.getElementById("finalLabel").style.fontSize = "40pt";
         document.getElementById("highScore").style.display = "inline-block"
-        document.getElementById("final1").style.display = "inline-block"
-        document.getElementById("final2").style.display = "inline-block"
 
         document.getElementById("timer").style.display = "none";
         document.getElementById("prompt").style.display = "none";
@@ -74,7 +71,7 @@ function reload(){
 }
 
 function generateWord(points=0){
-  var pointStr = "Score: "+ points
+  var pointStr = "Points: "+ points
   attemptArtist = false;
 
 
@@ -98,10 +95,10 @@ function generateWord(points=0){
   // document.getElementById("timeup").style.display = "none"
   // document.getElementById("songs").style.display = "none"
   document.getElementById("space1").style.display = "none"
-  // document.getElementById("space2").style.display = "none"
-  // document.getElementById("space3").style.display = "none"
-  // document.getElementById("space4").style.display = "none"
-  // document.getElementById("space5").style.display = "none"
+//   document.getElementById("space2").style.display = "none"
+//   document.getElementById("space3").style.display = "none"
+//   document.getElementById("space4").style.display = "none"
+//   document.getElementById("space5").style.display = "none"
 
   document.getElementById("again").style.display = "none"
   // document.getElementById("end").style.display = "inline-block"
@@ -113,7 +110,6 @@ function generateWord(points=0){
   document.getElementById("i2").style.display = "none"
   document.getElementById("i3").style.display = "none"
   document.getElementById("i4").style.display = "none"
-  document.getElementById("i5").style.display = "none"
 
   word = wordbank[Math.floor(Math.random() * wordbank.length)];
   // alert(text)
@@ -136,7 +132,7 @@ function artist(){
 }
 
 
-async function game3(){
+function game3(){
   var correct = "True"
   var resultStr = "CORRECT";
   document.getElementById("artistOn").style.display = "none";
@@ -147,70 +143,27 @@ async function game3(){
     points = points + 1;
   }
 
-  if (songGuess == "pineapple" || songGuess == ""){
+  if (songGuess == "pineapple"){
       correct = "False"
   }
-  // alert(word)
-  // alert(songGuess)
-  // alert(artistGuess)
+
+//   alert(songGuess)
+//   alert(artistGuess)
 
 
-  // if (correct == "True"){
-  //   points = points + 1;
-  //   resultStr = "CORRECT";
-  // }else{
-  //   resultStr = "INCORRECT";
-  // }
-  let answer = await checkAnswer(songGuess, word, artistGuess, points)
-  // if(answer == true){
-  //   points = points + 1;
-  //   resultStr = "CORRECT";
-  // }else if(answer == false) {
-  //   resultStr = "INCORRECT";
-  // }else{
-  //   resultStr = "UNKNOWN";
-  // }
+  if (correct == "True"){
+    points = points + 1;
+    resultStr = "CORRECT";
+  }else{
+    resultStr = "INCORRECT";
+  }
 
-  // alert(resultStr);
-  // generateWord(points);
+  alert(resultStr);
+  generateWord(points);
 }
 
 
-// checkAnswer()
 
-async function checkAnswer(song_title="love", term="love", artist_name="love", points) {
-
-  myURL = `http://lunarverse.pythonanywhere.com/checkanswer/${song_title}/${term}/${artist_name}/`
-
-  // alert(myURL)
-  let url_response = await grabUrl(myURL, points)
-
-  // alert(String(url_response))
-  // alert("done")
-  return url_response
-}
-
-async function grabUrl(myURL, points){
-    const response = await fetch(myURL)
-    const data = await response.text()
-    // alert("here")
-    if (data == "True"){
-        alert("Correct")
-        points = points + 1;
-        generateWord(points);
-        return True
-    }else if(data == "False"){
-        alert("Incorrect")
-        // points = points + -1;
-        generateWord(points);
-        return False
-    }else{
-      // points = points + -10;
-      generateWord(points);
-      alert("no idea what this is")
-    }
-    return False
-}
 
 // function game2(){
 //   clearInterval(refreshIntervalId);
@@ -620,4 +573,3 @@ function displayResult(){
 // // window.location.replace("http://www.w3schools.com");
 
 // // replace()
-// const wordbank = ["take", "life", "back", "never","die", "night", "day", "man", "woman", "dream", "world", "little","baby", "good", "again", "mind", "heart", "you", "breathe", "love", "fire", "dance", "moon", "sun", "star", "flower", "kiss", "lips", "sugar", "honey", "sweet", "girl", "boy", "everything", "lovely", "beautiful", "car", "music", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "december", "september", "august", "red", "blue", "yellow", "green", "orange", "purple", "black", "white", "mad", "slow", "talk", "run", "sour", "money", "teamwork", "young", "old", "school", "California", "fall", "winter", "autumn", "summer"];

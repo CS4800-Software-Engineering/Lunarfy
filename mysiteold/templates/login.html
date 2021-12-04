@@ -3,37 +3,46 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Price</title>
+    <title>Login</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
-  <body>
-    <header>
-        <img class="pic" src="luna.png" width="40px" height="40px" style="float:left;">
-
+<header>
     <div class="container" style="list-style: none;">
       <li><a class = "logo" style="font-size:25pt" href="http://lunarverse.pythonanywhere.com/">LunarVerse</a></li>
       <nav>
       <ul>
-          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/">Home</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/searchhome">Search</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/game.html">Game</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/about.html">About</a></li>
+          <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/price.html">Upgrade</a></li>
           <li class = "separator" style="font-size:14pt">|</li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/signup.html">Sign up</a></li>
           <li><a style="font-size:14pt" href="http://lunarverse.pythonanywhere.com/login.html">Log in</a></li>
+
       </ul>
       </nav>
     </div>
   </header>
-  <p style="text-align:center;"><img src="finalPrices2.png" width="1000px" height="500px"></p>
-  </body>
-  <div class="footer">
-    <br>
-    <p>Lunar Bits </p>
-    <p>CS 4800 Fall 2021</p>
-    <div class="containerB">
-      <img src="gh.png" width="40px" height="40px">
-      <button class="btn" onclick="location.href='https://github.com/CS4800-Software-Engineering'"></button>
+
+  <body>
+    <script src="script.js"></script>
+    <div allign="center">
+        <div class="container">
+          <br>
+          <br>
+          <form action="http://lunarverse.pythonanywhere.com/checklogin" method = "POST">
+            <label for="email">Email address</label><br>
+            <input type="text" id="email" size="40" placeholder="Enter your email." name="username"><br>
+
+            <label for="pass"> Password</label><br>
+            <input type="password" id="pass"
+            minlength="8" required placeholder="Enter password." name="password"><br><br><br>
+            <button class="button button1" type="submit" value="LOGIN" />SUBMIT</button>
+            <br>
+            <br>
+            <button class="button button1" onclick="location.href='http://lunarverse.pythonanywhere.com/'">GO BACK</button>
+          </form>
+        </div>
     </div>
-  </div>
+  </body>
 </html>

@@ -35,7 +35,6 @@ body {
   flex-direction: column;
   
   
-  
 }
 h1 {
   font-size: 64px;
@@ -104,19 +103,9 @@ header::after {
   margin-left: 20px;
   padding-top: 0px;
   padding-bottom: 10px;
-  padding-right: 0px;
   position: relative;
 }
 
-.pic{
-  padding-top: 4px;
-  padding-left: 120px;
-}
-
-.imgfull {
-    width: 100%;
-    height: auto;
-}
 
 
 .logo:hover {
