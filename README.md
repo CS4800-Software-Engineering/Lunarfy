@@ -1,5 +1,7 @@
 # Lunarfy
 
+http://cs480-projects.github.io/teams-fall2021/LunarBits/index.html
+
 Hello! If you try to log in with your own spotify account we need to add your email account as a collaborator 
 for our spotify web app because we were not able to request an extension for any spotify user to use it.
 Unfortunately Spotify does not approve requests for school projects, but we can add your email and it works perfectly.
